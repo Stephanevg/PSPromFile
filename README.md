@@ -17,7 +17,26 @@ district_custom_compliance{PackageName="MyWoopyPackage"} 98
 
 ```
 
-Read the examples below to learn how to generate it
+To generate the file above, use the following snippet
+
+```powershell
+import-module PSPromFile -Force
+
+#Create label
+$Label = New-PrometheusLabel -Name "PackageName" -Value "MyWoopyPackage"
+
+#Create metric
+$Metric = New-PrometheusMetricGauge -Name "district_custom_compliance" -Value 98 -Label $Label
+
+#Create promfile
+$Promfile = New-PromFile -MetricName "district_compliance" -HelpText "Defines compliancy of some sort" -Type Gauge -metrics $Metric
+
+#Writing promfile to disk in C:\Export\
+Write-PromFile -PromFile $Promfile -FolderPath "C:\Export\"
+
+```
+
+Read the examples below to learn in more details how to use `pspromfile`
 
 
 # installation
